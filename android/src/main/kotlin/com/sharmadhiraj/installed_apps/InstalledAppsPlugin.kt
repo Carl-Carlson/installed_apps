@@ -74,7 +74,7 @@ class InstalledAppsPlugin() : MethodCallHandler, FlutterPlugin, ActivityAware {
                 val packageNamePrefix: String = call.argument("package_name_prefix") ?: ""
                 Thread {
                     val apps: List<Map<String, Any?>> =
-                        getInstalledApps(includeSystemApps, withIcon, packageNamePrefix)
+                        getInstalledApps(includeSystemApps, includeLaunchableApps, withIcon, packageNamePrefix)
                     result.success(apps)
                 }.start()
             }
