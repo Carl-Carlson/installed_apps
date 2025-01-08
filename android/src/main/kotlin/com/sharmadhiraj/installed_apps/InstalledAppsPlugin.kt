@@ -127,7 +127,7 @@ class InstalledAppsPlugin() : MethodCallHandler, FlutterPlugin, ActivityAware {
         val launcherApps = context.getSystemServices(Context.LAUNCHER_APPS_SERVICE) as launcherApps
 
         for (app in launcherApps.getActivityList(null, profile)) {
-            var installedApps = packageManager.getInstalledApplications(0)
+            // var installedApps = packageManager.getInstalledApplications(0)
 
         }
         
