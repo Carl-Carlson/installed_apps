@@ -15,7 +15,7 @@ class InstalledApps {
   /// Returns a list of [AppInfo] objects representing the installed apps.
   static Future<List<AppInfo>> getInstalledApps([
     bool excludeSystemApps = true,
-    bool excludeLaunchableApps = true,
+    bool excludeNonLaunchableApps = true,
     bool withIcon = false,
     String packageNamePrefix = "",
   ]) async {
@@ -23,7 +23,7 @@ class InstalledApps {
       "getInstalledApps",
       {
         "exclude_system_apps": excludeSystemApps,
-        "exclude_launchable_apps": excludeLaunchableApps,
+        "exclude_non_launchable_apps": excludeNonLaunchableApps,
         "with_icon": withIcon,
         "package_name_prefix": packageNamePrefix,
       },
