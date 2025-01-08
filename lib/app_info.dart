@@ -21,7 +21,7 @@ class AppInfo {
 
   factory AppInfo.create(dynamic data) {
     return AppInfo(
-      name: data["name"],
+      name: data["name"].replaceAll('_', ' '),
       icon: data["icon"],
       packageName: data["package_name"],
       versionName: data["version_name"] ?? "1.0.0",
@@ -38,10 +38,7 @@ class AppInfo {
   static List<AppInfo> parseList(dynamic apps) {
     if (apps == null || apps is! List || apps.isEmpty) return [];
     final List<AppInfo> appInfoList = apps
-        .where((element) =>
-            element is Map &&
-            element.containsKey("name") &&
-            element.containsKey("package_name"))
+        .where((element) => element is Map && element.containsKey("name") && element.containsKey("package_name"))
         .map((app) => AppInfo.create(app))
         .toList();
     appInfoList.sort((a, b) => a.name.compareTo(b.name));
