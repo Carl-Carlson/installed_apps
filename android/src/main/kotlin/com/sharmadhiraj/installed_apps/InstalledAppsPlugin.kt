@@ -125,17 +125,15 @@ class InstalledAppsPlugin() : MethodCallHandler, FlutterPlugin, ActivityAware {
     ): List<Map<String, Any?>> {
         val packageManager = getPackageManager(context!!)
         var installedApps = packageManager.getInstalledApplications(0)
-        val launchIntent = getPackageManager(context!!).getLaunchIntentForPackage(app.package_name)
-        if(launchIntent)
-            if (excludeSystemApps)
-            installedApps =
-                installedApps.filter { app -> !isSystemApp(packageManager, app.packageName) }
-            if (packageNamePrefix.isNotEmpty())
-            installedApps = installedApps.filter { app ->
-                app.packageName.startsWith(
-                    packageNamePrefix.lowercase(ENGLISH)
-                )
-            }
+        if (excludeSystemApps)
+        installedApps =
+            installedApps.filter { app -> !isSystemApp(packageManager, app.packageName) && isLaunchableApp(packageManager, app.packageName)}
+        if (packageNamePrefix.isNotEmpty())
+        installedApps = installedApps.filter { app ->
+            app.packageName.startsWith(
+                packageNamePrefix.lowercase(ENGLISH)
+            )
+        }
         return installedApps.map { app -> convertAppToMap(packageManager, app, withIcon) }
     }
 
@@ -208,6 +206,11 @@ class InstalledAppsPlugin() : MethodCallHandler, FlutterPlugin, ActivityAware {
         } catch (e: PackageManager.NameNotFoundException) {
             false
         }
+    }
+
+    private fun isLaunchableApp(packageManager: PackageManager, packageName: String): Boolean {
+        val intent = packageManager.getLaunchIntentForPackage(packageName)
+        return intent != null
     }
 
 }
