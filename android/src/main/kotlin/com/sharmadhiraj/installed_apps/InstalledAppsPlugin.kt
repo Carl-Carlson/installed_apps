@@ -128,9 +128,9 @@ class InstalledAppsPlugin() : MethodCallHandler, FlutterPlugin, ActivityAware {
         val packageManager = getPackageManager(context!!)
         var installedApps = packageManager.getInstalledApplications(0)
 
-        if (excludeSystemApps)
-            installedApps =
-                installedApps.filter { app -> !isSystemApp(packageManager, app.packageName) }
+        // if (excludeSystemApps)
+        //     installedApps =
+        //         installedApps.filter { app -> !isSystemApp(packageManager, app.packageName) }
 
         if (excludeNonLaunchableApps)
             installedApps = 
@@ -143,10 +143,7 @@ class InstalledAppsPlugin() : MethodCallHandler, FlutterPlugin, ActivityAware {
                 )
             }
         
-        for (app in installedApps){
-        print(app)
-        }
-        installedApps.sortBy{ it.name?.lowercase()}
+
 
 
         return installedApps.map { app -> convertAppToMap(packageManager, app, withIcon) }
