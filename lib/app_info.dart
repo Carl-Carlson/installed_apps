@@ -21,7 +21,7 @@ class AppInfo {
 
   factory AppInfo.create(dynamic data) {
     return AppInfo(
-      name: data["name"].replaceAll('_', ' '),
+      name: data["name".replaceAll('_', ' ')],
       icon: data["icon"],
       packageName: data["package_name"],
       versionName: data["version_name"] ?? "1.0.0",
