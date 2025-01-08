@@ -125,7 +125,7 @@ class InstalledAppsPlugin() : MethodCallHandler, FlutterPlugin, ActivityAware {
     ): List<Map<String, Any?>> {
         val packageManager = getPackageManager(context!!)
         var installedApps = packageManager.getInstalledApplications(0)
-        print(installedApps)
+        print('$installedApps')
         
         /* 
          if (excludeSystemApps)
