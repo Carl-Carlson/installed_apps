@@ -143,7 +143,7 @@ class InstalledAppsPlugin() : MethodCallHandler, FlutterPlugin, ActivityAware {
                 packageNamePrefix.lowercase(ENGLISH)
             )
         }
-        return installedApps.map { app -> convertAppToMap(packageManager, app, withIcon) }
+        return launcherApps.map { app -> convertAppToMap(packageManager, app, withIcon) }
     }
 
     private fun startApp(packageName: String?): Boolean {
