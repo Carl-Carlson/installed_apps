@@ -132,9 +132,7 @@ class InstalledAppsPlugin() : MethodCallHandler, FlutterPlugin, ActivityAware {
         if (excludeSystemApps)
             installedApps =
                 installedApps.filter { app -> !isSystemApp(packageManager, app.packageName) }
-        if (excludeLaunchableApps)
-            installedApps = 
-                installedApps.filter { app -> !isLaunchableApp(packageManager, app.packageName)}
+
         if (packageNamePrefix.isNotEmpty())
             installedApps = installedApps.filter { app ->
                 app.packageName.startsWith(
@@ -142,6 +140,9 @@ class InstalledAppsPlugin() : MethodCallHandler, FlutterPlugin, ActivityAware {
                 )
             }
         
+        if (excludeLaunchableApps)
+            installedApps = 
+                installedApps.filter { app -> !isLaunchableApp(packageManager, app.packageName) }
 
 
 
