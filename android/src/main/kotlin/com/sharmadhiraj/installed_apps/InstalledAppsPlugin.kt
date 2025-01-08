@@ -125,10 +125,12 @@ class InstalledAppsPlugin() : MethodCallHandler, FlutterPlugin, ActivityAware {
     ): List<Map<String, Any?>> {
         val packageManager = getPackageManager(context!!)
         var installedApps = packageManager.getInstalledApplications(0)
-        if (excludeSystemApps)
+        val launchIntent = getPackageManager(context!!).getLaunchIntentForPackage(packageName)
+        if(launchIntent)
+            if (excludeSystemApps)
             installedApps =
                 installedApps.filter { app -> !isSystemApp(packageManager, app.packageName) }
-        if (packageNamePrefix.isNotEmpty())
+            if (packageNamePrefix.isNotEmpty())
             installedApps = installedApps.filter { app ->
                 app.packageName.startsWith(
                     packageNamePrefix.lowercase(ENGLISH)
