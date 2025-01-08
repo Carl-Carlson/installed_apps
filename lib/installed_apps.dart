@@ -8,7 +8,7 @@ class InstalledApps {
   /// Retrieves a list of installed apps on the device.
   ///
   /// [excludeSystemApps] specifies whether to exclude system apps from the list.
-  /// [excludeLaunchableApps] specifies whether to exlcude applications that can be launched or 'started'.
+  /// [excludeNonLaunchableApps] specifies whether to exlcude applications that can be launched or 'started'.
   /// [withIcon] specifies whether to include app icons in the list.
   /// [packageNamePrefix] is an optional parameter to filter apps with package names starting with a specific prefix.
   ///
