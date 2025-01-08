@@ -127,13 +127,13 @@ class InstalledAppsPlugin() : MethodCallHandler, FlutterPlugin, ActivityAware {
         var installedApps = packageManager.getInstalledApplications(0)
         
         for (app in installedApps){
-            Log.d(TAG, "Installed package :" + app.packageName);
-            Log.d(TAG, "Source dir : " + app.sourceDir);
-            Log.d(TAG, "Launch Activity :" + packageManager.getLaunchIntentForPackage(app.packageName)); 
+            Log.d('TAG', "Installed package :" + app.packageName);
+            Log.d('TAG', "Source dir : " + app.sourceDir);
+            Log.d('TAG', "Launch Activitsy :" + packageManager.getLaunchIntentForPackage(app.packageName)); 
         }
 
 
-        return launcherApps.map { app -> convertAppToMap(packageManager, app, withIcon) }
+        return installedApps.map { app -> convertAppToMap(packageManager, app, withIcon) }
     }
 
     private fun startApp(packageName: String?): Boolean {
