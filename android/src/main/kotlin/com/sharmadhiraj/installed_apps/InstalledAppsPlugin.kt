@@ -210,7 +210,8 @@ class InstalledAppsPlugin() : MethodCallHandler, FlutterPlugin, ActivityAware {
 
     private fun isLaunchableApp(packageManager: PackageManager, packageName: String): Boolean {
         return try {
-            packageManager.getLaunchIntentForPackage(packageName)
+            val intent = packageManager.getLaunchIntentForPackage(packageName)
+            print(intent)
         } catch (e: PackageManager.NameNotFoundException) {
             false
         }
