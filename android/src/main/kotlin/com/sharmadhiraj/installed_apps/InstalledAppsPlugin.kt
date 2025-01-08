@@ -124,21 +124,15 @@ class InstalledAppsPlugin() : MethodCallHandler, FlutterPlugin, ActivityAware {
         packageNamePrefix: String
     ): List<Map<String, Any?>> {
         val packageManager = getPackageManager(context!!)
-        //var installedApps = packageManager.getInstalledApplications(0)
-        val userManager = getSystemService(Context.USER_SERVICE) as UserManager
-        val launcherApps = getSystemService(Context.LAUNCHER_APPS_SERVICE) as LauncherApps
-
-
-        // if (excludeSystemApps)
-        //     installedApps =
-        //         installedApps.filter { app -> !isSystemApp(packageManager, app.packageName) }
-        // if (packageNamePrefix.isNotEmpty())
-        //     installedApps = installedApps.filter { app ->
-        //         app.packageName.startsWith(
-        //             packageNamePrefix.lowercase(ENGLISH)
-        //         )
-        //     }
+        var installedApps = packageManager.getInstalledApplications(0)
         
+        for (app in installedApps){
+            Log.d(TAG, "Installed package :" + app.packageName);
+            Log.d(TAG, "Source dir : " + app.sourceDir);
+            Log.d(TAG, "Launch Activity :" + packageManager.getLaunchIntentForPackage(app.packageName)); 
+        }
+
+
         return launcherApps.map { app -> convertAppToMap(packageManager, app, withIcon) }
     }
 
