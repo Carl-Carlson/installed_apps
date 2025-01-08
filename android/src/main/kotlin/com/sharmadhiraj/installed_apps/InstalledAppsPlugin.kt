@@ -127,9 +127,7 @@ class InstalledAppsPlugin() : MethodCallHandler, FlutterPlugin, ActivityAware {
         var installedApps = packageManager.getInstalledApplications(0)
         
         for (app in installedApps){
-            Log.d('TAG', "Installed package :" + app.packageName);
-            Log.d('TAG', "Source dir : " + app.sourceDir);
-            Log.d('TAG', "Launch Activitsy :" + packageManager.getLaunchIntentForPackage(app.packageName)); 
+            println("Launch Activity:" + packageManager.getLaunchIntentForPackage(app.packageName))
         }
 
 
@@ -207,13 +205,6 @@ class InstalledAppsPlugin() : MethodCallHandler, FlutterPlugin, ActivityAware {
         }
     }
 
-    private fun isLaunchableApp(packageManager: PackageManager, packageName: String): Boolean {
-        return try {
-            val intent = packageManager.getLaunchIntentForPackage(packageName)
-            print(intent)
-        } catch (e: PackageManager.NameNotFoundException) {
-            false
-        }
-    }
+   
 
 }
