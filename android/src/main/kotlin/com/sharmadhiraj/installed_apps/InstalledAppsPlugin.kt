@@ -144,6 +144,10 @@ class InstalledAppsPlugin() : MethodCallHandler, FlutterPlugin, ActivityAware {
             }
         
     
+        
+        installedApps.sortedBy { 
+            (it["name"] as? String)?.lowercase() ?: "" 
+        }
 
 
         return installedApps.map { app -> convertAppToMap(packageManager, app, withIcon) }
