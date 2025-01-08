@@ -121,7 +121,7 @@ class InstalledAppsPlugin() : MethodCallHandler, FlutterPlugin, ActivityAware {
 
     private fun getInstalledApps(
         excludeSystemApps: Boolean,
-        excludeLaunchableApps: Boolean,
+        excludeNonLaunchableApps: Boolean,
         withIcon: Boolean,
         packageNamePrefix: String
     ): List<Map<String, Any?>> {
@@ -132,7 +132,7 @@ class InstalledAppsPlugin() : MethodCallHandler, FlutterPlugin, ActivityAware {
             installedApps =
                 installedApps.filter { app -> !isSystemApp(packageManager, app.packageName) }
 
-        if (excludeLaunchableApps)
+        if (excludeNonLaunchableApps)
             installedApps = 
                 installedApps.filter { app -> isLaunchableApp(packageManager, app.packageName) }
 
