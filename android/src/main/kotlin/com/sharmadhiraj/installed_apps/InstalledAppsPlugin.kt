@@ -69,6 +69,7 @@ class InstalledAppsPlugin() : MethodCallHandler, FlutterPlugin, ActivityAware {
         when (call.method) {
             "getInstalledApps" -> {
                 val includeSystemApps = call.argument("exclude_system_apps") ?: true
+                val includeLaunchableApps = call.argument("exclude_launchable_apps") ?: true
                 val withIcon = call.argument("with_icon") ?: false
                 val packageNamePrefix: String = call.argument("package_name_prefix") ?: ""
                 Thread {
@@ -120,15 +121,28 @@ class InstalledAppsPlugin() : MethodCallHandler, FlutterPlugin, ActivityAware {
 
     private fun getInstalledApps(
         excludeSystemApps: Boolean,
+        excludeLaunchableApps: Boolean,
         withIcon: Boolean,
         packageNamePrefix: String
     ): List<Map<String, Any?>> {
         val packageManager = getPackageManager(context!!)
         var installedApps = packageManager.getInstalledApplications(0)
+        var launchIntent = 
+
+        if (excludeSystemApps)
+            installedApps =
+                installedApps.filter { app -> !isSystemApp(packageManager, app.packageName) }
+        if (excludeLaunchableApps)
+            installedApps = 
+                installedApps.filter { app -> !isLaunchableApp(packageManager, app.packageName)}
+        if (packageNamePrefix.isNotEmpty())
+            installedApps = installedApps.filter { app ->
+                app.packageName.startsWith(
+                    packageNamePrefix.lowercase(ENGLISH)
+                )
+            }
         
-        for (app in installedApps){
-            println("Launch Activity:" + packageManager.getLaunchIntentForPackage(app.packageName))
-        }
+
 
 
         return installedApps.map { app -> convertAppToMap(packageManager, app, withIcon) }
@@ -206,5 +220,15 @@ class InstalledAppsPlugin() : MethodCallHandler, FlutterPlugin, ActivityAware {
     }
 
    
+    private fun isLaunchableApp(packageManager: PackageManager, packageName: String): Boolean {
+    return try {
+        // Create an intent to check for the ACTION_MAIN and CATEGORY_LAUNCHER filters
+        val launchIntent = packageManager.getLaunchIntentForPackage(packageName)
+        // If the launchIntent is null, the app is not launchable
+        launchIntent != null
+    } catch (e: Exception) {
+        false // If an exception occurs, consider the app as not launchable
+    }
+}
 
 }
