@@ -143,8 +143,9 @@ class InstalledAppsPlugin() : MethodCallHandler, FlutterPlugin, ActivityAware {
                 )
             }
         
-    
-        print(installedApps)
+        for (app in installedApps){
+        print(app)
+        }
         installedApps.sortBy{ it.name?.lowercase()}
 
 
